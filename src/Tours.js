@@ -1,7 +1,7 @@
 import React from "react";
-import Tour from "./Tour";
-const Tours = ({tour}) => {
- console.log(tour);
+const Tours = ({tour,updatetour}) => {
+ const [readmore,setreadmore]=React.useState(false)
+ console.log(readmore)
   return (
     <section>
       <div className="title">
@@ -16,10 +16,13 @@ const Tours = ({tour}) => {
               <footer>
                 <div className="tour-info">
                 <h4>{item.name}</h4>
-                <h4>{item.price}</h4>
+                <h4 className="tour-price">{item.price}</h4>
                 </div>
-                <p>{item.info}</p>
-                <button className="delete-btn">not interested</button>
+                <p>{readmore ? item.info : `${item.info.substring(0, 200)}...`}
+                
+                  <button onClick={()=>setreadmore(!readmore)}>{!readmore?'Read More':'Show Less'}</button>
+                </p>
+                <button className="delete-btn" onClick={()=>updatetour(item.id)}>not interested</button>
               </footer>
             </article>
           ))

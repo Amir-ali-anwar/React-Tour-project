@@ -5,6 +5,10 @@ const url = "https://course-api.com/react-tours-project";
 function App() {
   const [tour, settour] = React.useState([]);
   const [loading, setloading] = React.useState(false);
+  const sorttours=(id)=>{
+    const newtours= tour.filter((tour)=>tour.id !==id)
+    settour(newtours)
+  }
   const fetchtours = async () => {
     setloading(true);
     try {
@@ -23,9 +27,21 @@ function App() {
   if (loading) {
     return <Loading />;
   }
+  if(tour.length === 0){
+    return (
+      <main>
+        <div className='title'>
+          <h2>no tours left</h2>
+          <button className='btn' onClick={() => fetchtours()}>
+            refresh
+          </button>
+        </div>
+      </main>
+    )
+  }
   return (
     <main>
-      <Tours tour={tour} />
+      <Tours tour={tour} updatetour={sorttours} />
     </main>
   );
 }
